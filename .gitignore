@@ -1,0 +1,14 @@
+# Start Generation Here
+*.pyc
+__pycache__/
+db.sqlite3
+/media
+/staticfiles
+.env
+*.log
+*.pot
+*.py[cod]
+*.egg-info/
+*.egg
+.DS_Store
+# End Generation Here
