@@ -70,9 +70,19 @@
                             <img class="card-img-top" src="{{ product.image.url }}" alt="..." />
                             <!-- Product details-->
                             <div class="card-body p-4">
+                                
+                                
                                 <div class="text-center">
                                     <!-- Product name-->
                                     <h5 class="fw-bolder">{{product.name}}</h5>
+                                    <div class="d-flex justify-content-center text-warning mb-2">
+
+                                        <div class="bi-star-fill"></div>
+                                        &nbsp;&nbsp;Sale&nbsp;&nbsp;
+                                        <div class="bi-star-fill"></div>
+                                        
+                                    </div>
+    
                                     <!-- Product price-->
                                     <strike>${{product.price}}</strike>
                                     ${{product.sale_price}}
