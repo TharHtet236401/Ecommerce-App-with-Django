@@ -29,7 +29,7 @@ def register_user(request):
             messages.success(request,'You have been successfully registered')
             return redirect('home')
         else:
-            messages.error(request,'Invalid username or password')
+            messages.error(request,form.errors)
             return redirect('register')
     else:
         form = SignUpForm()
