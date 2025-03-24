@@ -13,23 +13,64 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+        <style>
+            .message-container {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                min-width: 300px;
+            }
+            .alert-animated {
+                animation: slideIn 0.5s ease-in-out forwards, fadeOut 0.5s ease-in-out 3.5s forwards;
+                margin-bottom: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            @keyframes slideIn {
+                0% {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                100% {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes fadeOut {
+                0% {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        </style>
     </head>
     <body>
         <!-- Navigation-->
-         {% include 'nav.html' %}
-         {% if messages %}
-         {% for message in messages %}
-         <div class="alert alert-warning alert-dismissible fade show" role="alert">
-          {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-         {% endfor %}
-         {% endif %}
-         {% block content %}
-
-
-         {% endblock %}
-        
+        {% include 'nav.html' %}
+        {% if messages %}
+        <div class="message-container">
+            {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'debug' %}dark{% else %}{{ message.tags }}{% endif %} alert-animated" role="alert">
+                {% if message.tags == 'error' %}
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                {% elif message.tags == 'success' %}
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                {% elif message.tags == 'warning' %}
+                    <i class="bi bi-exclamation-circle-fill me-2"></i>
+                {% elif message.tags == 'info' %}
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                {% endif %}
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% block content %}
+        {% endblock %}
         
         <!-- Footer-->
         <footer class="py-5 bg-dark">
@@ -39,5 +80,16 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="{% static 'js/scripts.js' %}"></script>
+        <script>
+            // Auto-remove alerts after animation
+            document.addEventListener('DOMContentLoaded', function() {
+                const alerts = document.querySelectorAll('.alert-animated');
+                alerts.forEach(alert => {
+                    setTimeout(() => {
+                        alert.remove();
+                    }, 4000); // Remove after 4 seconds (after animation completes)
+                });
+            });
+        </script>
     </body>
 </html>

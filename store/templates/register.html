@@ -16,12 +16,21 @@
         <div class="col-md-6 col-lg-5">
             <div class="card shadow-lg border-0 rounded-lg">
                 <div class="card-body p-4">
+                    {% if form.non_field_errors %}
+                    <div class="message-container" style="position: static; width: 100%;">
+                        {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger alert-animated">
+                            {{ error }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
                     <form method="POST">
                         {% csrf_token %}
                         {% for field in form %}
                         <div class="mb-3">
                             <label class="form-label small fw-bold text-muted mb-1">{{ field.label }}</label>
-                            <div class="input-group">
+                            <div class="input-group {% if field.errors %}has-validation{% endif %}">
                                 <span class="input-group-text bg-light">
                                     {% if field.name == 'username' %}
                                         <i class="bi bi-person"></i>
@@ -54,10 +63,14 @@
                                         id="{{ field.id_for_label }}"
                                         value="{{ field.value|default:'' }}">
                                 {% endif %}
+                                {% if field.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in field.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
                             </div>
-                            {% if field.errors %}
-                                <div class="invalid-feedback d-block small">{{ field.errors|join:", " }}</div>
-                            {% endif %}
                             {% if field.help_text %}
                                 <div class="form-text small text-muted mt-1">{{ field.help_text|safe }}</div>
                             {% endif %}

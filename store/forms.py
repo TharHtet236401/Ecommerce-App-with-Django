@@ -7,9 +7,30 @@ class SignUpForm(UserCreationForm):
 	first_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'First Name'}))
 	last_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Last Name'}))
 
+
+	def clean_email(self):
+		email = self.cleaned_data.get('email')
+		if User.objects.filter(email=email).exists():
+			raise forms.ValidationError("This email is already registered")
+		return email
+
+	def clean_first_name(self):
+		first_name = self.cleaned_data.get('first_name')
+		if first_name == "hello":
+			raise forms.ValidationError("First name cannot be hello")
+		return first_name
+
+	def last_name(self):
+		return self.cleaned_data['last_name']
+
 	class Meta:
 		model = User
 		fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+		error_messages = {
+			'password2': {
+				'password_mismatch': "The passwords don't match. Please try again.",
+			},
+		}
 
 
 	def __init__(self, *args, **kwargs):

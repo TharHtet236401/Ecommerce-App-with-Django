@@ -26,10 +26,15 @@ def register_user(request):
             password = form.cleaned_data.get('password1') 
             user = authenticate(username=username,password=password)
             login(request,user)
-            messages.success(request,'You have been successfully registered')
+            messages.success(request, 'Account created successfully! Welcome to our platform.')
             return redirect('home')
         else:
-            messages.error(request,form.errors)
+            for field, errors in form.errors.items():
+                for error in errors:
+                    if field == '__all__':  # Non-field errors (like password mismatch)
+                        messages.error(request, error)
+                    else:
+                        messages.warning(request, f"{field}: {error}")
             return redirect('register')
     else:
         form = SignUpForm()
@@ -42,17 +47,17 @@ def login_user(request):
         user = authenticate(request,username=username,password=password)
         if user is not None:
             login(request,user)
-            messages.success(request,'You have been logged in')
+            messages.success(request, 'You have been logged in successfully!')
             return redirect('home')
         else:
-            messages.error(request,'Invalid username or password')
+            messages.error(request, 'Invalid username or password. Please try again.')
             return redirect('login')
     return render(request,'login.html')
 
 
 def logout_user(request):
     logout(request)
-    messages.success(request,'You have been logged out')
+    messages.info(request, 'You have been logged out successfully.')
     return redirect('login')
 
 
