@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import Product
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
+from .forms import SignUpForm
 # Create your views here.
 def home(request):
     products = Product.objects.all()
@@ -17,7 +18,22 @@ def about(request):
 
 
 def register_user(request):
-    return render(request,'register.html')
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username,password=password)
+            login(request,user)
+            messages.success(request,'You have been successfully registered')
+            return redirect('home')
+        else:
+            messages.error(request,'Invalid username or password')
+            return redirect('register')
+    else:
+        form = SignUpForm()
+        return render(request,'register.html',{'form':form})
 
 def login_user(request):
     if request.method == 'POST':
