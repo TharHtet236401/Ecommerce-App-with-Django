@@ -15,6 +15,10 @@ def home(request):
 def about(request):
     return render(request,'about.html')
 
+
+def register_user(request):
+    return render(request,'register.html')
+
 def login_user(request):
     if request.method == 'POST':
         username = request.POST['username']
