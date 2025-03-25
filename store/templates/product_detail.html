@@ -1,22 +1,136 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<div class="container">
-    <div class="card mb-3" style="max-width: 540px;">
-        <div class="row g-0">
-          <div class="col-md-4">
-            <img src="{{product.image.url}}" class="img-fluid rounded-start" alt="...">
-          </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title">{{product.name}}</h5>
-              <p class="card-text">{{product.description}}</p>
-              <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-            </div>
-          </div>
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">{{product.name}}</h1>
+            <p class="lead fw-normal text-white-50 mb-0">{{product.category.name}}</p>
         </div>
-      </div>
-</div>
+    </div>
+</header>
+
+<!-- Product section-->
+<section class="py-5">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <!-- Product image-->
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <img class="card-img-top rounded-3" src="{{product.image.url}}" alt="{{product.name}}" />
+                    {% if product.is_sale %}
+                    <div class="position-absolute top-0 end-0 m-3">
+                        <span class="badge bg-danger">Sale</span>
+                    </div>
+                    {% endif %}
+                </div>
+                <!-- Thumbnail gallery (if you have multiple images) -->
+                <div class="row mt-3 g-2">
+                    <div class="col-3">
+                        <img src="{{product.image.url}}" class="img-thumbnail" alt="Thumbnail 1">
+                    </div>
+                    <!-- Add more thumbnails here if you have multiple product images -->
+                </div>
+            </div>
+            <!-- Product details-->
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h2 class="fw-bolder mb-3">{{product.name}}</h2>
+                        
+                        <!-- Price section -->
+                        <div class="mb-4">
+                            {% if product.is_sale %}
+                            <div class="d-flex align-items-center">
+                                <span class="text-decoration-line-through text-muted me-3">${{product.price}}</span>
+                                <span class="h3 text-danger mb-0">${{product.sale_price}}</span>
+                             
+                            </div>
+                            {% else %}
+                            <span class="h3 mb-0">${{product.price}}</span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Description -->
+                        <p class="text-muted mb-4">{{product.description}}</p>
+
+                        <!-- Category -->
+                        <div class="mb-4">
+                            <span class="badge bg-light text-dark">Category: {{product.category.name}}</span>
+                        </div>
+
+                        <!-- Add to cart section -->
+                        <div class="d-flex gap-3 mb-4">
+                            <div class="input-group" style="max-width: 150px;">
+                                <button class="btn btn-outline-secondary" type="button" id="decreaseQuantity">-</button>
+                                <input type="number" class="form-control text-center" value="1" min="1" id="quantity">
+                                <button class="btn btn-outline-secondary" type="button" id="increaseQuantity">+</button>
+                            </div>
+                            <button class="btn btn-primary flex-grow-1">
+                                <i class="bi bi-cart-plus me-2"></i>Add to Cart
+                            </button>
+                        </div>
+
+                        <!-- Additional info -->
+                        <div class="border-top pt-4">
+                            <h5 class="fw-bold mb-3">Product Details</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                    Free shipping on orders over $50
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-shield-check text-primary me-2"></i>
+                                    30-day money-back guarantee
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-truck text-info me-2"></i>
+                                    Fast delivery
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related products section -->
+<section class="py-5 bg-light">
+    <div class="container px-4 px-lg-5">
+        <h2 class="fw-bolder mb-4">Related Products</h2>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <!-- Add related products here -->
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const quantityInput = document.getElementById('quantity');
+    const decreaseBtn = document.getElementById('decreaseQuantity');
+    const increaseBtn = document.getElementById('increaseQuantity');
+
+    decreaseBtn.addEventListener('click', function() {
+        let value = parseInt(quantityInput.value);
+        if (value > 1) {
+            quantityInput.value = value - 1;
+        }
+    });
+
+    increaseBtn.addEventListener('click', function() {
+        let value = parseInt(quantityInput.value);
+        quantityInput.value = value + 1;
+    });
+
+    quantityInput.addEventListener('change', function() {
+        if (this.value < 1) {
+            this.value = 1;
+        }
+    });
+});
+</script>
 
 {% endblock %}
