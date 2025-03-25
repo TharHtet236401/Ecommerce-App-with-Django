@@ -61,3 +61,10 @@ def logout_user(request):
     return redirect('login')
 
 
+def product_detail(request,pk):
+    product = Product.objects.get(id=pk)
+    context = {
+        'product':product
+    }
+    return render(request,'product_detail.html',context)
+
