@@ -1,20 +1,30 @@
 from django.shortcuts import render,HttpResponse,redirect
 from django.http import HttpResponse
-from .models import Product
+from .models import Product,Category
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from .forms import SignUpForm
+
+
 # Create your views here.
-def home(request):
+
+
+def home(request,listcategories=None):
     products = Product.objects.all()
+    categories = Category.objects.all()
     context = {
-        'products':products
+        'products':products,
+        'categories':categories
     }
     return render(request,'home.html',context)
 
 
 def about(request):
-    return render(request,'about.html')
+    categories = Category.objects.all()
+    context = {
+        'categories':categories
+    }
+    return render(request,'about.html',context)
 
 
 def register_user(request):
@@ -63,8 +73,21 @@ def logout_user(request):
 
 def product_detail(request,pk):
     product = Product.objects.get(id=pk)
+    categories = Category.objects.all()
     context = {
-        'product':product
+        'product':product,
+        'categories':categories
     }
     return render(request,'product_detail.html',context)
 
+
+def category_product(request,pk):
+    categories = Category.objects.all()
+    category = Category.objects.get(id=pk)
+    products = Product.objects.filter(category=category)
+    context = {
+        'products':products,
+        'category':category,
+        'categories':categories
+    }
+    return render(request,'categorized_product.html',context)
