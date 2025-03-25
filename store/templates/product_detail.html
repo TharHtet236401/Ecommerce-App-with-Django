@@ -3,20 +3,20 @@
 {% block content %}
 
 <div class="container">
-    <div class="row">
-        <center>
-            <div class="col-8">
-                <br/> <br/>
-               <p align="justify">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta architecto delectus eveniet in velit. Esse deleniti vitae totam ex consequuntur, animi tenetur sapiente sit quaerat neque ea rem facilis itaque dolores quasi dolorem in possimus eaque odit. Porro maxime esse natus perferendis animi voluptates autem velit, quas doloremque dolorum, nobis delectus reiciendis nam magni eos sapiente a mollitia earum laudantium ratione quasi quia. Cum officia consectetur alias ullam beatae. Veniam nulla earum odio suscipit quo perferendis sequi atque accusantium expedita iste. Iste, minus! Rerum, exercitationem laboriosam mollitia tenetur repudiandae sint assumenda iusto temporibus voluptatum fuga. Vero dolores nam, neque nostrum dolore et, cumque facere consequuntur facilis quas quaerat voluptatem voluptatibus sit numquam dolorem saepe quasi temporibus unde officiis modi! Mollitia voluptatibus alias quo commodi pariatur impedit recusandae, cumque placeat possimus architecto laboriosam exercitationem hic. Libero, eligendi possimus asperiores, dolores, molestiae facere necessitatibus vitae magni ut id tempore nisi voluptas. Quod excepturi ipsa placeat debitis repellendus aperiam sed iste dignissimos facere labore aspernatur eum quos beatae saepe in ad dolor eos molestiae neque vero illum voluptatibus vitae, nostrum ut? Quam accusantium perspiciatis voluptates recusandae distinctio quidem deleniti culpa nisi praesentium officiis, iste quae consequuntur. Quos earum, ut accusantium mollitia consectetur ullam!
-
-                <br/><br/>
-                erferendis sequi atque accusantium expedita iste. Iste, minus! Rerum, exercitationem laboriosam mollitia tenetur repudiandae sint assumenda iusto temporibus voluptatum fuga. Vero dolores nam, neque nostrum dolore et, cumque facere consequuntur facilis quas quaerat voluptatem voluptatibus sit numquam dolorem saepe quasi temporibus unde officiis modi! Mollitia voluptatibus alias quo commodi pariatur impedit recusandae, cumque placeat possimus architecto laboriosam exercitationem hic. Libero, eligendi possimus asperiores, dolores, molestiae facere necessitatibus vitae magni ut id tempore nisi voluptas. Quod excepturi ipsa placeat debitis repellendus aperiam sed iste dignissimos facere labore aspernatur eum quos beatae saepe in ad dolor eos molestiae neque vero illum voluptatibus vitae, nostrum ut? Quam accusantium perspiciatis voluptates recusandae distinctio quidem deleniti culpa nisi praesentium officiis, iste quae consequuntur. Quos earum, ut accusantium mollitia consectetur ullam!
-               </p>
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{product.image.url}}" class="img-fluid rounded-start" alt="...">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{product.name}}</h5>
+              <p class="card-text">{{product.description}}</p>
+              <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
             </div>
-        </center>
-    </div>
+          </div>
+        </div>
+      </div>
 </div>
 
 {% endblock %}
