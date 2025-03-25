@@ -17,6 +17,7 @@
             <div class="container px-4 px-lg-5 mt-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     
+                    {% if products.count > 0 %}
                     {% for product in products %}
 
                     {% if product.is_sale %}
@@ -74,9 +75,14 @@
                             </div>
                         </div>
                     {% endif %}
-
-                   
                     {% endfor %}
+                    {% else %}
+                    <div class="col-12">
+                        <div class="alert alert-warning" role="alert">
+                            No products found in this category.
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </section>
